@@ -14,3 +14,5 @@ env2
 *.xml
 
 !logo.png
+!package.json
+!package-lock.json
