@@ -74,8 +74,8 @@ async function show(id) {}
 async function cookingShow() {
   clearTimeout(timeout);
   await switchTo('cookingtv');
-  await updateVideo('homevideo', `none`);
-  await updateVideo('homevideo', `${BASE}/cookingshow2/cookingshow.mp4`);
+  await updateVideo('cookingvideo', `none`);
+  await updateVideo('cookingvideo', `${BASE}/cookingshow2/cookingshow.mp4`);
 }
 
 async function homeInvaderShow() {
