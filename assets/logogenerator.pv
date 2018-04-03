@@ -1,0 +1,74 @@
+from random import choice
+from glob import glob
+
+def draw_text(content, fontfam, targetx, targety, max_width, font_size=150):
+    fnt = font(fontfam, font_size)
+    txt = text(content, targetx, targety, plot=False)
+    w, h = textmetrics(txt)
+    bounds = txt.bounds
+    while w > max_width:
+        font_size -= 0.5
+        fnt = font(fontfam, font_size)
+        txt = text(content, targetx, targety, plot=False)
+        bounds = txt.bounds
+        w, h = textmetrics(txt)
+
+    actualy = targety + fnt.capheight
+    txt = text(content, targetx, actualy, plot=True)
+    return (txt, fnt)
+
+def make_texts():
+    width = 330
+    height = 270
+    padding = width * 0.08
+    
+    text_width = width - padding * 2
+    max_text_height = height - padding * 2
+    
+    allfonts = fonts()
+    
+    for fam in allfonts:
+        print(fam)
+        clear(all)
+        background(0, 0)
+        fill(255)
+        txt, fnt = draw_text('AUTO', fam, padding, padding, text_width)
+        bounds = txt.bounds
+        
+        fill(255)
+        # txt, fnt = draw_text('TV!', fam, padding, bounds.h, text_width, font_size=200)
+        txt2, fnt2 = draw_text('TV!', fam, padding, padding+fnt.capheight+10, text_width, font_size=220)
+        
+        size(txt.bounds.w + padding*2, fnt.capheight + fnt2.capheight + 10 + padding*2)
+        export('logos/' + fam + '.temp.png')
+    
+def random_bgs():
+    color(mode=HSV)
+    for i, iname in enumerate(glob('logos/texts/*.png')):
+        clear(all)
+        bgcolor = color(random(),1,.99, mode=HSV)
+        print(bgcolor)
+        width = 330
+        height = 270
+        padding = width * 0.08
+        
+        size(width, height)
+        background(0, 0)
+        
+        fill(bgcolor)
+        rect(0, 0, width, height, roundness=0.2)
+        
+        img = image(iname, 0, 0, plot=False)
+        w, h = img.size
+        neww = w
+        newh = h
+        if h > height:
+            newh = height - padding * 2
+            neww = float(w) * (float(newh)/float(h))
+        if w > width:
+            neww = width - padding * 2
+            newh = float(h) * (float(neww)/float(w))
+        image(img, (width-neww)/2.0, (height-newh)/2.0, neww, newh)
+        export('logos/' + str(i).zfill(4) + '.png')
+
+random_bgs()

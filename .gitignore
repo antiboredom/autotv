@@ -1,0 +1,16 @@
+env
+env2
+*.pyc
+*.mp4
+*.json
+*.mp3
+*.png
+*.gif
+*.mov
+*.psd
+*.ann
+*.pickle
+*.vtt
+*.xml
+
+!logo.png
