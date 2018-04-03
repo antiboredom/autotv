@@ -3,6 +3,7 @@ env2
 node_modules/
 *.pyc
 *.mp4
+*.ts
 *.json
 *.mp3
 *.png

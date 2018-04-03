@@ -1,0 +1,3 @@
+0 0 * * * /Users/sam/autotv/controlroom/run.sh generate-shopping
+0 1 * * * /Users/sam/autotv/controlroom/run.sh generate-homes
+0 2 * * * /Users/sam/autotv/controlroom/run.sh generate-cooking
