@@ -193,8 +193,8 @@ def main(filenames=None):
         ('simple_ingredients2', '(<JJ>? <NN> <IN> <JJ>? <NN|NNS>)'),
         ('instructions',        '(<RB>? <VB> <DT>? <JJ>? <NN|NNS> <RB>?)'),
         ('instructions2',       '(<VB> <PRP> <RB>? <NN|NNS>?)'),
-        ('hmm',                 'hmm|mmm|yum'),
         ('delicious',           'delicious|incredible|wonderful|amazing'),
+        ('hmm',                 'hmm|mmm|yum'),
     ]
 
     clips = []
@@ -211,5 +211,8 @@ def main(filenames=None):
 
 
 if __name__ == '__main__':
-    # main(sys.argv[1:])
-    main()
+    args = sys.argv[1:]
+    if len(args) > 0:
+        main(args)
+    else:
+        main()
