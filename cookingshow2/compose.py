@@ -14,8 +14,9 @@ config.MELT_BINARY = 'melt'
 nlp = spacy.load('en')
 
 def download(query, pages=4):
+    print(query)
     for i in range(1, pages+1):
-        url = 'https://www.youtube.com/results?page={}&search_query=how+to+cook+{},cc'.format(i,query)
+        url = 'https://www.youtube.com/results?page={}&search_query=how+to+cook+{},cc'.format(i,query.replace(' ', '+'))
         call(['youtube-dl', url, '-f', '22', '-i', '--write-auto-sub', '--max-filesize', '100m', '-o', 'videos/%(id)s.%(ext)s'])
 
 
@@ -86,9 +87,12 @@ def compose_clip(filenames, outname, pat):
     timestamps = []
 
     for f in filenames:
-        with open(f.replace('.mp4', '.en.vtt'), 'r') as infile:
-            data = infile.read()
-        sentences = vtt.parse_auto_sub(data)
+        try:
+            with open(f.replace('.mp4', '.en.vtt'), 'r') as infile:
+                data = infile.read()
+            sentences = vtt.parse_auto_sub(data)
+        except:
+            continue
 
         if 'words' not in sentences[0]:
             continue
@@ -189,8 +193,8 @@ def main(filenames=None):
         ('simple_ingredients2', '(<JJ>? <NN> <IN> <JJ>? <NN|NNS>)'),
         ('instructions',        '(<RB>? <VB> <DT>? <JJ>? <NN|NNS> <RB>?)'),
         ('instructions2',       '(<VB> <PRP> <RB>? <NN|NNS>?)'),
-        ('hmm',                 'hmm|mmm|yum'),
         ('delicious',           'delicious|incredible|wonderful|amazing'),
+        ('hmm',                 'hmm|mmm|yum'),
     ]
 
     clips = []
@@ -207,5 +211,8 @@ def main(filenames=None):
 
 
 if __name__ == '__main__':
-    # main(sys.argv[1:])
-    main()
+    args = sys.argv[1:]
+    if len(args) > 0:
+        main(args)
+    else:
+        main()
