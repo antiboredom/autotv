@@ -15,7 +15,7 @@ async function switchTo(name, transition = 'Fade', duration = 1000) {
 }
 
 async function updateVideo(id, filename) {
-  return await obs.SetSourceSettings({
+  obs.SetSourceSettings({
     sourceName: id,
     sourceSettings: {
       local_file: filename
@@ -74,8 +74,10 @@ async function show(id) {}
 async function cookingShow() {
   clearTimeout(timeout);
   await switchTo('cookingtv');
-  await updateVideo('cookingvideo', `none`);
-  await updateVideo('cookingvideo', `${BASE}/cookingshow2/cookingshow.mp4`);
+  updateVideo('cookingvideo', `none`);
+  setTimeout(function(){
+    updateVideo('cookingvideo', `${BASE}/cookingshow2/cookingshow.mp4`);
+  }, 1000);
 }
 
 async function homeInvaderShow() {
@@ -92,8 +94,10 @@ async function homeInvaderShow() {
     i++;
     if (i >= txts.length) i = 0;
   }, 7000);
-  await updateVideo('homevideo', `none`);
-  await updateVideo('homevideo', `${BASE}/homeshow/home_invader.mp4`);
+  updateVideo('homevideo', `none`);
+  setTimeout(function(){
+    updateVideo('homevideo', `${BASE}/homeshow/home_invader.mp4`);
+  }, 1000);
 }
 
 async function laborShow() {
