@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Diaporama</title>
+  <style>
+    body {
+      background: #000;
+      color: #fff;
+      margin: 0;
+      overflow: hidden;
+      font: 12px Georgia;
+    }
+    h1, h2, h3 {
+      margin: 5px;
+      font-weight: normal;
+        padding: 0;
+    }
+    #personHolder span {
+      background-color: rgba(255, 255, 0, .8);
+        color: #000;
+      display: inline-block;
+      line-height: 1;
+      padding: 3px;
+    }
+    #personHolder {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      opacity: 1;
+      transition: 0.5s all;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="diaporama"></div>
+  <div id="personHolder">
+  <div>
+
+  <script src="./diaporama.bundle.js"></script>
+  <script>
+    window.diaporama = null;
+    let personHolder = document.querySelector('#personHolder');
+
+    function setPerson(p) {
+      let html = `
+        <h1><span>${p.name}</span></h1>
+        <h2><span>${p.title}</span></h2>
+        <h2><span>${p.company}</span></h2>
+        <h2><span>${p.location}</span></h2>
+      `;
+      personHolder.innerHTML = html;
+    }
+
+    fetch('./cops.json')
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(json) {
+      var div = document.getElementById("diaporama");
+
+      let duration = parseInt(60*60*1000 / json.length);
+
+      let slidedata = json.sort((a, b) => a.name.localeCompare(b.name)).map((d) => {
+        return {
+          // image: d.img.replace('slideimages', 'images'),
+          image: d.img + '.2.gif',
+          // image: d.img,
+          transitionNext: {duration: 2000},
+          duration: duration,
+          kenburns: {
+            // from: [ 0.1, [ 0.5, 0.5 ] ],
+            // to: [ 1, [ 0.5, 0.5 ] ]
+            from: [ 0.8, [ 0.5, 0.5 ] ],
+            to: [ 1, [ 0.5, 0.5 ] ]
+          },
+          person: d
+        }
+      });
+
+      setPerson(slidedata[0].person);
+
+      var diaporama = Diaporama(div, {
+        data: {timeline: slidedata},
+        autoplay: true,
+        loop: true
+      });
+
+      var threshold = 1024 * 512;
+
+      function resize() {
+        var w = window.innerWidth;
+        var h = window.innerHeight;
+        diaporama.width = w;
+        diaporama.height = h;
+        diaporama.resolution = Math.min(window.devicePixelRatio || 1, Math.ceil((threshold) / (w * h))); // heuristic to degrade the quality for higher resolution
+      }
+
+      window.addEventListener("resize", resize);
+      resize();
+
+      document.body.addEventListener("keydown", function(e) {
+        switch (e.which) {
+          case 38: // Up
+            diaporama.playbackRate *= 1.5;
+            break;
+          case 40: // Down
+            diaporama.playbackRate /= 1.5;
+            break;
+          case 37: // Left
+            diaporama.prev();
+            break;
+          case 39: // Right
+            diaporama.next();
+            break;
+          case 32: // Space
+            diaporama.paused = !diaporama.paused;
+            break;
+        }
+      });
+
+      diaporama.on('transition', function(e) {
+        personHolder.style.opacity = 0;
+        // personHolder.innerHTML = '';
+      });
+
+      diaporama.on('transitionEnd', function(e) {
+        let p = diaporama.data.timeline[diaporama.slide].person;
+        setPerson(p);
+        personHolder.style.opacity = 1;
+      });
+
+      window.diaporama = diaporama;
+
+    });
+  </script>
+</body>
+
+</html>

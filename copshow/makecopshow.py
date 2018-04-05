@@ -135,7 +135,6 @@ def compose(datafile, outname, total_duration=3600, slide_duration=20, fade=2):
         offset = 0
 
         for p in chunk:
-            print(len(chunk)*slide_duration, offset+textpad, slide_duration-textpad)
             txt = p.get('formattedName', '').split(' ')[0] + '\n' + p.get('title', '') + '\n'+p.get('location', '')
             clip = Text(txt, start=0, end=slide_duration-textpad, offset=offset+textpad, halign="left", valign="bottom", color="#ff0000", font='OCR A Std', bbox=('5%', '5%', '90%', '90%'))
             clip.fadein(fade)
@@ -152,9 +151,27 @@ def compose(datafile, outname, total_duration=3600, slide_duration=20, fade=2):
     # comp.preview()
 
 
+def gen_web_slides(datafiles):
+    items = []
+    for i in range(0, 10):
+        item = {
+          "image": str(i).zfill(5)+'.jpg',
+          "duration": 20000,
+          "transitionNext": { "duration": 2000 },
+          "kenburns": {
+            "from": [0.8, [0.5,0.5]],
+            "to": [1, [0.5,0.5]]
+          },
+        }
+        items.append(item)
+    out = {'timeline': items}
+    with open('webslide/diaporama.json', 'w') as outfile:
+        json.dump(out, outfile, indent=2)
+
 
 
 
 if __name__ == '__main__':
-    compose('cops.json', 'copshow.mp4')
+    # compose('cops.json', 'copshow.mp4')
+    gen_web_slides('cops.json')
 
