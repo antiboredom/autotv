@@ -71,6 +71,16 @@ async function hide(id) {}
 
 async function show(id) {}
 
+async function copShow() {
+  clearTimeout(timeout);
+  await switchTo('coptv');
+}
+
+async function tipsShow() {
+  clearTimeout(timeout);
+  await switchTo('tipstv');
+}
+
 async function cookingShow() {
   clearTimeout(timeout);
   await switchTo('cookingtv');
@@ -159,7 +169,7 @@ async function main() {
 
     await printSourceInfo();
 
-    let allshows = [homeInvaderShow, laborShow, cookingShow];
+    let allshows = [copShow, homeInvaderShow, laborShow, cookingShow, tipsShow];
     let showIndex = 0;
 
     allshows[showIndex]();

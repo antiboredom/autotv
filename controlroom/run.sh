@@ -15,6 +15,11 @@ generate-homes)
   cd homeshow
   python compose.py
   ;;
+generate-cops)
+  echo "Generating cops"
+  cd copshow
+  python linked_in_scraper.py
+  ;;
 generate-cooking)
   echo "Generating cooking"
   cd cookingshow2
