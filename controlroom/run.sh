@@ -20,6 +20,11 @@ generate-cops)
   cd copshow
   python linked_in_scraper.py
   ;;
+download-cooking)
+  echo "Downloading cooking"
+  cd cookingshow2
+  wget -N http://159.65.190.4/cookingshow.mp4
+  ;;
 generate-cooking)
   echo "Generating cooking"
   cd cookingshow2
