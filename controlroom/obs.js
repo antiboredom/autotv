@@ -1,4 +1,5 @@
 const fs = require('fs');
+const spawn = require('child_process').spawn;
 const OBSWebSocket = require('obs-websocket-js');
 const obs = new OBSWebSocket();
 let random = require('random-js')();
@@ -8,6 +9,12 @@ const PASS = 'autotv';
 const BASE = '/Users/sam/autotv';
 
 let timeout;
+
+
+async function cleanup() {
+  clearTimeout(timeout);
+  spawn('killall', ['-9', 'pelosi']);
+}
 
 async function switchTo(name, transition = 'Fade', duration = 1000) {
   await obs.SetCurrentScene({'scene-name': name});
@@ -72,17 +79,23 @@ async function hide(id) {}
 async function show(id) {}
 
 async function copShow() {
-  clearTimeout(timeout);
+  cleanup();
   await switchTo('coptv');
 }
 
+async function meditationShow() {
+  cleanup();
+  await switchTo('meditationtv');
+  spawn('../meditationshow/bin/pelosi.app/Contents/MacOS/pelosi');
+}
+
 async function tipsShow() {
-  clearTimeout(timeout);
+  cleanup();
   await switchTo('tipstv');
 }
 
 async function cookingShow() {
-  clearTimeout(timeout);
+  cleanup();
   await switchTo('cookingtv');
   updateVideo('cookingvideo', `none`);
   setTimeout(function(){
@@ -91,7 +104,7 @@ async function cookingShow() {
 }
 
 async function homeInvaderShow() {
-  clearTimeout(timeout);
+  cleanup();
   switchTo('hometv');
   let txt = fs.readFileSync(`${BASE}/homeshow/the_apartment.txt`, 'utf-8');
   // txt = txt.replace('\n', '       *       ', 'g');
@@ -111,7 +124,7 @@ async function homeInvaderShow() {
 }
 
 async function laborShow() {
-  clearTimeout(timeout);
+  cleanup();
   switchTo('refuge');
   let urls = fs.readFileSync(`${BASE}/shoppingshow/shoppinglist.txt`, 'utf-8').split('\n');
   random.shuffle(urls);
@@ -169,7 +182,7 @@ async function main() {
 
     await printSourceInfo();
 
-    let allshows = [copShow, homeInvaderShow, laborShow, cookingShow, tipsShow];
+    let allshows = [meditationShow, copShow, homeInvaderShow, laborShow, cookingShow, tipsShow];
     let showIndex = 0;
 
     allshows[showIndex]();
