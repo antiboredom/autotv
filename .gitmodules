@@ -1,0 +1,3 @@
+[submodule "meditationshow/meditationshow"]
+	path = meditationshow/meditationshow
+	url = git@github.com:antiboredom/meditationshow.git
