@@ -1,5 +1,8 @@
 const fs = require('fs');
 const spawn = require('child_process').spawn;
+const util = require('util');
+const readFile = util.promisify(fs.readFile);
+const moment = require('moment-timezone');
 const OBSWebSocket = require('obs-websocket-js');
 const obs = new OBSWebSocket();
 let random = require('random-js')();
@@ -9,6 +12,16 @@ const PASS = 'autotv';
 const BASE = '/Users/sam/autotv';
 
 let timeout;
+let currentShow = null;
+
+let showCodes = {
+  'Cop Show': copShow,
+  'Shopping Show': laborShow,
+  'Meditation Show': meditationShow,
+  'Cooking Show': cookingShow,
+  'Advice Show': tipsShow,
+  'Home Show': homeInvaderShow
+};
 
 
 async function cleanup() {
@@ -168,6 +181,34 @@ async function printSourceInfo() {
   }
 }
 
+async function switchShows() {
+  let data = await readFile('../docs/schedule.json', 'utf8');
+  let schedule = JSON.parse(data);
+
+  let currentTime = moment().tz('America/New_York');
+
+  let show = schedule[schedule.length - 1];
+
+  for (let i = 0; i < schedule.length - 1; i++) {
+    let ts = moment(schedule[i].time, 'HH:mm:ss').tz('America/New_York');
+    let nextTs = moment(schedule[i+1].time, 'HH:mm:ss').tz('America/New_York');
+
+    if (currentTime.isSameOrAfter(ts) && currentTime.isBefore(nextTs)){
+      show = schedule[i]
+    }
+  }
+
+  if (show.program != currentShow && showCodes[show.program]) {
+    currentShow = show.program;
+    console.log(`switching to ${currentShow}`);
+    try {
+      showCodes[show.program]();
+    } catch (e) {
+      console.log(e);
+    }
+  }
+}
+
 async function main() {
   try {
     obs.onSwitchScenes(data => {
@@ -181,19 +222,12 @@ async function main() {
     await obs.connect({address: HOST, password: PASS});
     console.log('Connected!');
 
+    switchShows()
+    setInterval(switchShows, 10*1000);
+
     // await switchTo('empty');
 
     //await printSourceInfo();
-
-    let allshows = [meditationShow, copShow, homeInvaderShow, laborShow, cookingShow, tipsShow];
-    let showIndex = 0;
-
-    allshows[showIndex]();
-    setInterval(() => {
-      showIndex ++;
-      if (showIndex >= allshows.length) showIndex = 0;
-      allshows[showIndex]();
-    }, 60*60*1000);
 
     // resetLogo();
 

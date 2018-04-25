@@ -40,15 +40,17 @@ function addSchedule(schedule) {
 function checkSchedule() {
   let currentTime = moment().tz('America/New_York');
   let items = document.querySelectorAll('.schedule-item');
+  let show = items[items.length-1];
   for (let i = 0; i < items.length-1; i++) {
     let item = items[i];
     let ts = items[i].getAttribute('data-time');
     let nextTs = items[i+1].getAttribute('data-time');
     if (currentTime.isSameOrAfter(ts) && currentTime.isBefore(nextTs)){
-      item.classList.add('current');
-      document.querySelector('#current-show').textContent = item.getAttribute('data-program');
+      show = item;
     }
   }
+  show.classList.add('current');
+  document.querySelector('#current-show').textContent = show.getAttribute('data-program');
 }
 
 
