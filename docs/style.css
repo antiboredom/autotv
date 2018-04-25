@@ -1,0 +1,186 @@
+* {
+  box-sizing: border-box;
+}
+
+/* html { */
+/*   height: 100%; */
+/*   width: 100%; */
+/* } */
+
+body {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  font: 16px "Open Sans", sans-serif;
+  font: 16px monospace;
+  /* font: 16px Georgia, serif; */
+  color: #eee;
+  background-color: rgba(0,212,255,1);
+  background-color: rgba(0,0,255,1);
+  /* font-family: 'Fredoka One', cursive; */
+  /* background: url('bg.jpg'); */
+}
+
+h1, h2, h3, h4, h5, h6 {
+  /* font-family: 'Fredoka One', cursive; */
+  font-weight: normal;
+  text-transform: uppercase;
+}
+
+.container {
+  max-width: 1000px;
+  padding: 0px 20px;
+  margin: auto;
+  z-index: 999;
+  position: relative;
+}
+
+.underlay {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.4);
+  /* animation-name: pulsate-bg; */
+  /* animation-iteration-count: infinite; */
+  /* animation-duration: 5s; */
+  /* animation-direction: alternate; */
+}
+
+@keyframes pulsate-bg {
+    from {background-color: rgba(255, 255, 255, 0.2);}
+    to {background-color: rgba(255, 255, 255, 0.9);}
+}
+
+.blink {
+  animation: blink-animation 1s steps(5, start) infinite;
+  -webkit-animation: blink-animation 1s steps(5, start) infinite;
+}
+@keyframes blink-animation {
+  to {
+    visibility: hidden;
+  }
+}
+
+
+header {
+  /* background-color: rgba(0, 0, 0, .9); */
+  padding: 10px;
+}
+
+nav {
+  display: flex;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  /* font-weight: bold; */
+  padding: 10px;
+  margin-right: 10px;
+}
+
+nav > a:nth-child(2) {
+  /* margin-left: auto; */
+}
+
+#logo {
+  /* margin-left: -10px; */
+  text-transform: uppercase;
+  font-family: 'Fredoka One', cursive;
+  color: #fff;
+  background-color: red;
+  border-radius: 6px;
+  font-size: 1.2em;
+}
+
+.shadow {
+  box-shadow: 0px 0px 20px #000;
+  border: 2px solid #333;
+}
+
+.watch {
+  overflow: hidden;
+  /* border-radius: 20px; */
+  /* border: none !important; */
+  border: 5px solid white !important;
+  /* box-shadow: 0px 0px 20px #000; */
+}
+
+iframe {
+  /* border-radius: 20px; */
+}
+
+.stroke {
+  -webkit-text-stroke: 1px black;
+  /* color: white; */
+  /* text-shadow: */
+  /* 3px 3px 0 #000, */
+  /* -1px -1px 0 #000, */
+  /* 1px -1px 0 #000, */
+  /* -1px 1px 0 #000, */
+  /* 1px 1px 0 #000; */
+}
+
+/* #logo img { */
+/*   max-height: 50px; */
+/* } */
+
+.tagline {
+  text-align: center;
+  padding: 20px;
+  font-style: italic;
+}
+
+.on-now {
+  /* text-align: center; */
+}
+
+.hl {
+  padding: 6px;
+  /* border-radius: 5px; */
+  /* box-shadow: 0px 0px 20px #000; */
+}
+
+.red {
+  background-color: red;
+}
+
+.blue {
+  /* color: #000; */
+  background-color: rgba(0,0,255,1);
+}
+
+.black {
+  background-color: black;
+}
+
+#schedule-items {
+  /* margin-left: 180px; */
+}
+
+.schedule-item {
+  margin: 20px;
+}
+
+.time {
+  /* display: inline-block; */
+  min-width: 100px;
+}
+
+.embed-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  max-width: 100%;
+}
+.embed-container iframe,
+.embed-container object,
+.embed-container embed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}

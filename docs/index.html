@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>AutoTV!</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Automatic Television">
+  <meta name="author" content="Sam Lavigne">
+  <link href="https://fonts.googleapis.com/css?family=Fredoka+One|Open+Sans" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=1.0">
+</head>
+
+<body>
+
+  <!-- <div class="underlay"></div> -->
+
+  <div class="container">
+    <section class="tagline"><span class="">24/7 auto-generated live-streaming television programming</span></section>
+
+    <section class="watch shadow">
+      <a name="watch"></a>
+      <div class="embed-container">
+        <iframe src="https://www.youtube.com/embed/live_stream?channel=UCix42lmFMh5B16zX9k9YEJQ&?autoplay=1" frameborder="0" allowfullscreen></iframe>
+      </div>
+    </section>
+
+
+    <section class="on-now">
+      <h3>
+        <span class="hl blue">LIVE NOW:</span> <span class="blink hl red">SHOPPING SHOW</span>
+      </h3>
+    </section>
+
+    <section class="schedule">
+      <a name="schedule"></a>
+      <h2><span class="hl blue">Schedule for <span id="today"><span>:</span></h2>
+
+      <div id="schedule-items"></div>
+    </section>
+
+  </div>
+  <script src="moment.min.js"></script>
+  <script src="moment-timezone-with-data-2012-2022.min.js"></script>
+  <script src="tv.js"></script>
+</body>
+
+</html>
