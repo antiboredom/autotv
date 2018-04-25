@@ -18,4 +18,5 @@ node_modules/
 
 !logo.png
 !package.json
+!schedule.json
 !package-lock.json
