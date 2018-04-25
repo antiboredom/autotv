@@ -85,8 +85,11 @@ async function copShow() {
 
 async function meditationShow() {
   cleanup();
-  await switchTo('meditationtv');
-  spawn('../meditationshow/bin/pelosi.app/Contents/MacOS/pelosi');
+  setTimeout(() => {
+    let pelosi = `${BASE}/meditationshow/bin/pelosi.app/Contents/MacOS/pelosi`;
+    spawn(pelosi);
+    switchTo('meditationtv');
+  }, 5000);
 }
 
 async function tipsShow() {
@@ -180,7 +183,7 @@ async function main() {
 
     // await switchTo('empty');
 
-    await printSourceInfo();
+    //await printSourceInfo();
 
     let allshows = [meditationShow, copShow, homeInvaderShow, laborShow, cookingShow, tipsShow];
     let showIndex = 0;
