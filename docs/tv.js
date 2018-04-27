@@ -30,6 +30,7 @@ function addSchedule(schedule) {
       <div class="schedule-item" data-time="${ts}" data-program="${s.program}">
         <span class="time hl blue">${ts.format('HH:mm:ss z')}</span>
         <span class="show hl red">${s.program}</span>
+        <span class="desc hl blue">${s.description}</span>
       </div>
     `;
   });
