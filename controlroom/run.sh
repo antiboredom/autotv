@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-BASE="/Users/sam/autotv/"
+BASE="/home/sam/autotv/"
 
 cd $BASE
 source env/bin/activate
