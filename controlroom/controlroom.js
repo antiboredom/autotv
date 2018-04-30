@@ -48,7 +48,7 @@ async function switchScene(name, transition = 'Fade', duration = 1000) {
 }
 
 async function updateMedia(id, filename) {
-  obs.SetSourceSettings({
+  return await obs.SetSourceSettings({
     sourceName: id,
     sourceSettings: {
       local_file: filename
@@ -57,37 +57,37 @@ async function updateMedia(id, filename) {
 }
 
 async function setVideo(filename){
-  show('video');
-  obs.SetSourceSettings({
+  await obs.SetSourceSettings({
     sourceName: 'video',
     sourceSettings: {
       local_file: filename
     }
   });
+  return await show('video');
 }
 
 async function setAudio(filename){
-  show('audio1');
-  obs.SetSourceSettings({
+  let settings = await obs.SetSourceSettings({
     sourceName: 'audio1',
     sourceSettings: {
       local_file: filename
     }
   });
+  return await show('audio1');
 }
 
 async function setAudio2(filename){
-  show('audio2');
-  obs.SetSourceSettings({
+  await obs.SetSourceSettings({
     sourceName: 'audio2',
     sourceSettings: {
       local_file: filename
     }
   });
+  return await show('audio2');
 }
 
 async function updateURL(id, value) {
-  obs.SetSourceSettings({
+  return await obs.SetSourceSettings({
     sourceName: id,
     sourceSettings: {
       url: value
@@ -96,29 +96,27 @@ async function updateURL(id, value) {
 }
 
 async function setLocalURL(value) {
-  obs.ResetSceneItem({'scene-name': 'main', item: 'browser'});
-  show('browser');
-  obs.SetSourceSettings({
+  await obs.SetSourceSettings({
     sourceName: 'browser',
     sourceSettings: {
       local_file: value
     }
   });
+  return await show('browser');
 }
 
 async function setRemoteURL(value) {
-  obs.ResetSceneItem({'scene-name': 'main', item: 'browser'});
-  show('browser');
-  obs.SetSourceSettings({
+  await obs.SetSourceSettings({
     sourceName: 'browser',
     sourceSettings: {
       url: value,
     }
   });
+  return await show('browser');
 }
 
 async function updateText(id, value) {
-  obs.SetSourceSettings({
+  return await obs.SetSourceSettings({
     sourceName: id,
     sourceSettings: {
       text: value
@@ -127,17 +125,18 @@ async function updateText(id, value) {
 }
 
 async function setText(value) {
-  show('text1');
-  obs.SetSourceSettings({
+  await obs.SetSourceSettings({
     sourceName: 'text1',
     sourceSettings: {
       text: value
     }
   });
+  return await show('text1');
 }
 
 async function setShowTitle(value) {
-  updateText('title', value);
+  await updateText('title', value);
+  return true;
 }
 
 async function updateImage(id, filename) {
@@ -150,19 +149,19 @@ async function updateImage(id, filename) {
 }
 
 async function setImage(filename) {
-  show('image');
-  return await obs.SetSourceSettings({
+  await obs.SetSourceSettings({
     sourceName: 'image',
     sourceSettings: {
       file: filename
     }
   });
+  return await show('image');
 }
 
 //166x126
 //
 async function position(id, x = 0, y = 0, w = 1, h = 1, rotation = 0) {
-  obs.SetSceneItemProperties({
+  return await obs.SetSceneItemProperties({
     item: id,
     position: {
       x: x,
@@ -176,39 +175,65 @@ async function position(id, x = 0, y = 0, w = 1, h = 1, rotation = 0) {
   });
 }
 
-async function hide(id) {
-  obs.SetSceneItemProperties({
-    item: id,
-    visible: false
-  });
+async function hide(id, scene='main') {
+  try {
+    let response = await obs.SetSceneItemProperties({
+      // scene: scene,
+      item: id,
+      visible: false
+    });
+    return response;
+  } catch (e) {
+    console.log(e);
+    return e;
+  }
 }
 
-async function show(id) {
-  obs.SetSceneItemProperties({
-    item: id,
-    visible: true
-  });
+async function show(id, scene='main') {
+  try {
+    let response = await obs.SetSceneItemProperties({
+      // scene: scene,
+      item: id,
+      visible: true
+    });
+    return response;
+  } catch (e) {
+    console.log(e);
+    return e;
+  }
 }
 
 async function showAll() {
-  SOURCES.forEach(show);
+  for (let i = 0; i < SOURCES.length; i++) {
+    await show(SOURCES[i])
+  }
+  return true;
 }
 
 async function hideAll() {
-  SOURCES.forEach(hide);
+  for (let i = 0; i < SOURCES.length; i++) {
+    await hide(SOURCES[i]);
+  }
+  return true;
 }
 
-function switchShow(showName) {
-  cleanup()
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 async function copShow() {
   cleanup();
-  setShowTitle('COP\nSHOW');
-  setAudio(`${BASE}/copshow/cops.mp3`);
+  await setShowTitle('COP\nSHOW');
+  await setRemoteURL('');
+  await setAudio(`${BASE}/copshow/cops.mp3`);
   let url = await createWebServer(`${BASE}/copshow`);
-  console.log(url);
-  setRemoteURL(url);
+  await sleep(1000);
+  await setRemoteURL(url);
+  // await sleep(500);
+  // await hide('browser');
+  // await sleep(500);
+  // await show('browser');
+  return true;
 }
 
 async function meditationShow() {
@@ -231,8 +256,14 @@ async function meditationShow() {
 
 async function tipsShow() {
   cleanup();
-  setShowTitle('ADVICE\nSHOW');
-  setRemoteURL('http://reallycool.tips');
+  await setShowTitle('ADVICE\nSHOW');
+  await setRemoteURL('');
+  await sleep(1000);
+  await setRemoteURL('http://reallycool.tips');
+  // await sleep(500);
+  // await hide('browser');
+  // await sleep(500);
+  // await show('browser');
 }
 
 async function cookingShow() {
@@ -266,7 +297,13 @@ async function laborShow() {
 
   let urls = fs.readFileSync(`${BASE}/shoppingshow/shoppinglist.txt`, 'utf-8').split('\n');
   random.shuffle(urls);
-  setRemoteURL(urls[0].trim());
+  await setRemoteURL('');
+  await sleep(1000);
+  await setRemoteURL(urls[0].trim());
+  // await sleep(500);
+  // await hide('browser');
+  // await sleep(500);
+  // await show('browser');
   let urlTime = 12000;
   let i = 1;
   timeout = setInterval(function() {
@@ -302,7 +339,7 @@ async function printSourceInfo() {
   }
 }
 
-async function switchShows() {
+async function getCurrentShow() {
   let data = await readFile('../docs/schedule.json', 'utf8');
   let schedule = JSON.parse(data);
 
@@ -319,20 +356,22 @@ async function switchShows() {
     }
   }
 
+  return show;
+}
+
+async function switchShows(show) {
+  if (!show) show = await getCurrentShow();
+
   if (show.program != currentShow && showCodes[show.program]) {
-    hideAll();
     currentShow = show.program;
-    updateText('nextshow', currentShow.toUpperCase());
-    switchScene('transition');
+    await hideAll();
+    await switchScene('transition');
+    await updateText('nextshow', currentShow.toUpperCase());
     console.log(`switching to ${currentShow}`);
-    setTimeout(async () => {
-      try {
-        await switchScene('main');
-        showCodes[show.program]();
-      } catch (e) {
-        console.log(e);
-      }
-    }, 5000);
+    await sleep(5000);
+    await switchScene('main');
+    await sleep(500);
+    showCodes[show.program]();
   }
 }
 
@@ -347,9 +386,12 @@ async function main() {
     });
 
     await obs.connect({address: HOST, password: PASS});
+    await switchScene('main');
+    // await printSourceInfo();
     console.log('Connected!');
-
-    switchShows()
+    // await show('transition');
+    // switchShows({program: 'Cop Show'})
+    // switchShows({program: 'Advice Show'})
     setInterval(switchShows, 10*1000);
 
   } catch (e) {
