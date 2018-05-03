@@ -24,7 +24,8 @@ let showCodes = {
   'Meditation Show': meditationShow,
   'Cooking Show': cookingShow,
   'Advice Show': tipsShow,
-  'Home Show': homeInvaderShow
+  'Home Show': homeInvaderShow,
+  'Nature Show': natureShow
 };
 
 
@@ -219,6 +220,15 @@ async function hideAll() {
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function natureShow() {
+  cleanup();
+  await setShowTitle('NATURE\nSHOW');
+  await setRemoteURL('');
+  await sleep(1000);
+  await setRemoteURL('http://159.65.190.4:8080/live/livestream.m3u8');
+  return true
 }
 
 async function copShow() {
