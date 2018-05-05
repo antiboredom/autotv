@@ -227,7 +227,7 @@ async function natureShow() {
   await setShowTitle('NATURE\nSHOW');
   await setRemoteURL('');
   await sleep(1000);
-  await setRemoteURL('http://159.65.190.4:8080/live/livestream.m3u8');
+  await setRemoteURL('http://159.65.190.4:8089');
   return true
 }
 
