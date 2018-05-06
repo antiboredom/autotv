@@ -12,7 +12,7 @@ const HOST = 'localhost:4444';
 const PASS = 'autotv';
 const BASE = '/home/sam/autotv';
 
-const SOURCES = ["video", "image", "text1", "window", "audio1", "audio2", "browser", "vlc"];
+const SOURCES = ["video", "remotevideo", "image", "text1", "window", "audio1", "audio2", "browser", "vlc"];
 
 let procs = [];
 let server;
@@ -65,6 +65,16 @@ async function setVideo(filename){
     }
   });
   return await show('video');
+}
+
+async function setRemoteVideo(filename){
+  await obs.SetSourceSettings({
+    sourceName: 'remotevideo',
+    sourceSettings: {
+      input: filename
+    }
+  });
+  return await show('remotevideo');
 }
 
 async function setAudio(filename){
@@ -225,9 +235,9 @@ function sleep(ms) {
 async function natureShow() {
   cleanup();
   await setShowTitle('NATURE\nSHOW');
-  await setRemoteURL('');
+  await setRemoteVideo('');
   await sleep(1000);
-  await setRemoteURL('http://159.65.190.4:8089');
+  await setRemoteVideo('rmtp://159.65.190.4/live');
   return true
 }
 
@@ -397,13 +407,13 @@ async function main() {
 
     await obs.connect({address: HOST, password: PASS});
     // await switchScene('main');
-    // await printSourceInfo();
+    await printSourceInfo();
     console.log('Connected!');
     // await show('transition');
     // switchShows({program: 'Cop Show'})
     // switchShows({program: 'Advice Show'})
-    switchShows();
-    setInterval(switchShows, 10*1000);
+    // switchShows();
+    // setInterval(switchShows, 10*1000);
 
   } catch (e) {
     console.log(e);
