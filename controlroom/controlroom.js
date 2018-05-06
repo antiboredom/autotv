@@ -407,13 +407,13 @@ async function main() {
 
     await obs.connect({address: HOST, password: PASS});
     // await switchScene('main');
-    await printSourceInfo();
+    // await printSourceInfo();
     console.log('Connected!');
     // await show('transition');
     // switchShows({program: 'Cop Show'})
     // switchShows({program: 'Advice Show'})
-    // switchShows();
-    // setInterval(switchShows, 10*1000);
+    switchShows();
+    setInterval(switchShows, 10*1000);
 
   } catch (e) {
     console.log(e);
