@@ -237,7 +237,7 @@ async function natureShow() {
   await setShowTitle('NATURE\nSHOW');
   await setRemoteVideo('');
   await sleep(1000);
-  await setRemoteVideo('rmtp://159.65.190.4/live');
+  await setRemoteVideo('rtmp://159.65.190.4/live');
   return true
 }
 
