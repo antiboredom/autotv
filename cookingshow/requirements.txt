@@ -17,7 +17,7 @@ murmurhash==0.28.0
 numpy==1.13.3
 olefile==0.44
 pathlib==1.0.1
-Pillow==4.3.0
+Pillow==6.2.0
 plac==0.9.6
 preshed==1.0.0
 regex==2017.4.5
