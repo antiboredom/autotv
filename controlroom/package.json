@@ -10,7 +10,7 @@
     "node-snowmix": "^0.2.0",
     "obs-websocket-js": "^1.2.0",
     "random-js": "^1.0.8",
-    "serve": "^6.5.6"
+    "serve": "^10.1.2"
   },
   "devDependencies": {},
   "scripts": {
