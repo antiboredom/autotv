@@ -5,9 +5,12 @@
   "main": "obs.js",
   "dependencies": {
     "ascii-table": "^0.0.9",
+    "moment": "^2.22.1",
+    "moment-timezone": "^0.5.16",
     "node-snowmix": "^0.2.0",
+    "obs-websocket-js": "^1.2.0",
     "random-js": "^1.0.8",
-    "obs-websocket-js": "^1.2.0"
+    "serve": "^6.5.6"
   },
   "devDependencies": {},
   "scripts": {

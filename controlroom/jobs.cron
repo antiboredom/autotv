@@ -1,5 +1,7 @@
-PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
-0 13 * * * /Users/sam/autotv/controlroom/run.sh generate-shopping
-41 12 * * * /Users/sam/autotv/controlroom/run.sh generate-homes
-30 1 * * * rm /Users/sam/autotv/cookingshow2/videos/*.mp4
-#0 2 * * * /Users/sam/autotv/controlroom/run.sh generate-cooking
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+0 13 * * * /home/sam/autotv/controlroom/run.sh generate-shopping
+0 0 * * * /home/sam/autotv/controlroom/run.sh generate-cops
+41 12 * * * /home/sam/autotv/controlroom/run.sh generate-homes
+30 1 * * * rm /home/sam/autotv/cookingshow2/videos/*.mp4
+#0 2 * * * /home/sam/autotv/controlroom/run.sh generate-cooking
+0 2 * * * /home/sam/autotv/controlroom/run.sh download-cooking

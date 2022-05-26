@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-BASE="/Users/sam/autotv/"
+BASE="/home/sam/autotv/"
 
 cd $BASE
 source env/bin/activate
@@ -19,6 +19,11 @@ generate-cops)
   echo "Generating cops"
   cd copshow
   python linked_in_scraper.py
+  ;;
+download-cooking)
+  echo "Downloading cooking"
+  cd cookingshow2
+  wget -N http://159.65.190.4/cookingshow.mp4
   ;;
 generate-cooking)
   echo "Generating cooking"
