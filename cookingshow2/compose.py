@@ -169,7 +169,7 @@ def compose_clip(filenames, outname, pat):
     return outname
 
 
-def main(filenames=None):
+def main(filenames=None, finalname=None):
     # try:
     #     shutil.rmtree('shots')
     # except:
@@ -200,19 +200,35 @@ def main(filenames=None):
     clips = []
     for cat, pat in video:
         outname = cat + '.mp4'
+        try:
+            os.remove(outname)
+        except Exception as e:
+            print(e)
         compose_clip(filenames, outname, pat)
         clips.append(Clip(outname))
 
     comp = Composition(clips, singletrack=True)
     # finalname = 'cookingshow_' + query + '.mp4'
-    finalname = 'cookingshow.mp4'
+    if finalname is None:
+        finalname = 'cookingshow.mp4'
     comp.save(finalname)
     return finalname
 
+def delete_oldies():
+    files = glob('videos/*.mp4')
+    for f in files:
+        try:
+            os.remove(f)
+        except Exception as e:
+            print(e)
 
 if __name__ == '__main__':
-    args = sys.argv[1:]
-    if len(args) > 0:
-        main(args)
-    else:
-        main()
+    # args = sys.argv[1:]
+    # if len(args) > 0:
+    #    main(args)
+    # else:
+    #    main()
+    for i in range(0, 10):
+        delete_oldies()
+        fname = "cooking_show_{}.mp4".format(i)
+        main(finalname=fname)
