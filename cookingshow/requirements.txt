@@ -14,7 +14,7 @@ moviepy==0.2.3.2
 msgpack-numpy==0.4.1
 msgpack-python==0.4.8
 murmurhash==0.28.0
-numpy==1.13.3
+numpy==1.22.0
 olefile==0.44
 pathlib==1.0.1
 Pillow==4.3.0
