@@ -6,7 +6,7 @@
   "dependencies": {
     "ascii-table": "^0.0.9",
     "moment": "^2.22.1",
-    "moment-timezone": "^0.5.16",
+    "moment-timezone": "^0.5.35",
     "node-snowmix": "^0.2.0",
     "obs-websocket-js": "^1.2.0",
     "random-js": "^1.0.8",
