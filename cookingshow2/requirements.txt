@@ -14,7 +14,7 @@ msgpack-python==0.5.4
 murmurhash==0.28.0
 numpy==1.14.2
 pathlib==1.0.1
-Pillow==5.0.0
+Pillow==9.3.0
 plac==0.9.6
 preshed==1.0.0
 regex==2017.4.5
