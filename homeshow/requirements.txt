@@ -1,2 +1,2 @@
-Pillow==5.0.0
+Pillow==9.3.0
 vidpy==0.1.9
